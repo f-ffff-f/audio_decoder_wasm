@@ -5,6 +5,8 @@ services:
     build: .
     volumes:
       - .:/app
+    ports:
+      - 8000:8000
     stdin_open: true
     tty: true
     container_name: audio_decoder_wasm

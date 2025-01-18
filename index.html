@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WASM Audio Decoder Test</title>
+</head>
+
+<body>
+  <h1>WASM Audio Decoder Test</h1>
+  <input type="file" id="fileInput" accept="audio/*" />
+  <script type="module">
+    import init, { decode_audio_data } from './pkg/audio_decoder_wasm.js'
+
+    // Initialize the WASM module
+    init().then(() => {
+      console.log("WASM module loaded")
+
+      // File input handling
+      const fileInput = document.getElementById('fileInput')
+      fileInput.addEventListener('change', async (event) => {
+        const file = event.target.files[0]
+        if (!file) {
+          console.error("No file selected")
+          return
+        }
+
+        try {
+          // Read the file as an ArrayBuffer
+          const arrayBuffer = await file.arrayBuffer()
+
+          // Decode the audio data using the WASM function
+          const float32Array = decode_audio_data(new Uint8Array(arrayBuffer))
+
+          console.log("Decoded PCM data:", float32Array)
+        } catch (error) {
+          console.error("Error decoding audio file:", error)
+        }
+      })
+    });
+  </script>
+</body>
+
+</html>
