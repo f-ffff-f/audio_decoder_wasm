@@ -25,6 +25,9 @@ jobs:
       - name: Build WASM
         run: wasm-pack build --target web
 
+      - name: Copy README.md to pkg
+        run: cp README.md pkg/
+
       - name: Configure NPM
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
