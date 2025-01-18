@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  audio_decoder_wasm:
+    build: .
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
+    container_name: audio_decoder_wasm
